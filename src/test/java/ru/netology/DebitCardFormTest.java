@@ -25,7 +25,8 @@ public class DebitCardFormTest {
             os = "mac";
         else
             os = "linux";
-        System.setProperty("webdriver.chrome.driver", "./driver/" + os + "/chromedriver" + (os.equals("win") ? ".exe" : ""));
+        System.setProperty("webdriver.chrome.driver",
+                "./driver/" + os + "/chromedriver" + (os.equals("win") ? ".exe" : ""));
     }
 
     @BeforeEach
