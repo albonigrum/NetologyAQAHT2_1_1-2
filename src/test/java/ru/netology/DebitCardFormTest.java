@@ -1,10 +1,10 @@
 package ru.netology;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -27,6 +27,7 @@ public class DebitCardFormTest {
             os = "linux";
         System.setProperty("webdriver.chrome.driver",
                 "./driver/" + os + "/chromedriver" + (os.equals("win") ? ".exe" : ""));
+        System.setProperty("webdriver.chrome.silentOutput", "true");
     }
 
     @BeforeEach
@@ -55,4 +56,37 @@ public class DebitCardFormTest {
         assertTrue(actual.contains("Ваша заявка успешно отправлена!"));
     }
 
+    @ParameterizedTest(name = "{displayName}[{index}] {0}")
+    @CsvFileSource(resources = "/incorrectNameValue.csv", numLinesToSkip = 1)
+    void shouldIncorrectName(String name, String valueToTest) {
+        driver.get("http://localhost:9999");
+        driver.findElement(cssSelector("[data-test-id=name] input")).sendKeys(valueToTest);
+        driver.findElement(cssSelector("[role=button]")).click();
+
+        assertTrue(driver.findElement(
+                cssSelector("[data-test-id=name]")).getAttribute("class").contains("input_invalid"));
+    }
+
+    @ParameterizedTest(name = "{displayName}[{index}] {0}")
+    @CsvFileSource(resources = "/incorrectTelephoneValue.csv", numLinesToSkip = 1)
+    void shouldIncorrectTelephone(String name, String valueToTest) {
+        driver.get("http://localhost:9999");
+        driver.findElement(cssSelector("[data-test-id=name] input")).sendKeys("Иван Васильевич");
+        driver.findElement(cssSelector("[data-test-id=phone] input")).sendKeys(valueToTest);
+        driver.findElement(cssSelector("[role=button]")).click();
+
+        assertTrue(driver.findElement(
+                cssSelector("[data-test-id=phone]")).getAttribute("class").contains("input_invalid"));
+    }
+
+    @Test
+    void shouldIncorrectCheckbox() {
+        driver.get("http://localhost:9999");
+        driver.findElement(cssSelector("[data-test-id=name] input")).sendKeys("Иван Васильевич");
+        driver.findElement(cssSelector("[data-test-id=phone] input")).sendKeys("+79012345678");
+        driver.findElement(cssSelector("[role=button]")).click();
+
+        assertTrue(driver.findElement(
+                cssSelector("[data-test-id=agreement]")).getAttribute("class").contains("input_invalid"));
+    }
 }

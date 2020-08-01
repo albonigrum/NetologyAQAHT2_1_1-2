@@ -1,0 +1,8 @@
+Name, value for test
+Latin letters, Ivan Petrov
+Special symbols, %-+$&$%^$%/@
+Complex, +*^&%#@12Ivan
+11 digits without plus, 12345678901
+11 digits with other spec, -12345678901
+less then 11 digits, +1234567890
+more then 11 digits, +123456789012
