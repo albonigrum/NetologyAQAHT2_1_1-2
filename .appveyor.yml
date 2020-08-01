@@ -6,6 +6,7 @@ branches:
   only:
     - master
     - Task1
+    - Task2
 
 build: off  # будем использовать свой скрипт сборки
 
