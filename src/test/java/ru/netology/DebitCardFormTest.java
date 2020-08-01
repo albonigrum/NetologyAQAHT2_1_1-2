@@ -63,8 +63,7 @@ public class DebitCardFormTest {
         driver.findElement(cssSelector("[data-test-id=name] input")).sendKeys(valueToTest);
         driver.findElement(cssSelector("[role=button]")).click();
 
-        assertTrue(driver.findElement(
-                cssSelector("[data-test-id=name]")).getAttribute("class").contains("input_invalid"));
+        assertTrue(driver.findElement(cssSelector("[data-test-id=name].input_invalid")).isDisplayed());
     }
 
     @ParameterizedTest(name = "{displayName}[{index}] {0}")
@@ -75,8 +74,7 @@ public class DebitCardFormTest {
         driver.findElement(cssSelector("[data-test-id=phone] input")).sendKeys(valueToTest);
         driver.findElement(cssSelector("[role=button]")).click();
 
-        assertTrue(driver.findElement(
-                cssSelector("[data-test-id=phone]")).getAttribute("class").contains("input_invalid"));
+        assertTrue(driver.findElement(cssSelector("[data-test-id=phone].input_invalid")).isDisplayed());
     }
 
     @Test
@@ -86,7 +84,6 @@ public class DebitCardFormTest {
         driver.findElement(cssSelector("[data-test-id=phone] input")).sendKeys("+79012345678");
         driver.findElement(cssSelector("[role=button]")).click();
 
-        assertTrue(driver.findElement(
-                cssSelector("[data-test-id=agreement]")).getAttribute("class").contains("input_invalid"));
+        assertTrue(driver.findElement(cssSelector("[data-test-id=agreement].input_invalid")).isDisplayed());
     }
 }
